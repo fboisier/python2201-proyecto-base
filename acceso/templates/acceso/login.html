@@ -1,0 +1,89 @@
+{% extends "acceso/base.html"%}
+
+{% block titulo %}Login y Register{% endblock %}
+
+{% block contenido %}
+
+<div class="container mt-5">
+    
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Register</h3>
+            <hr>
+
+            <form action="" method="post">
+            
+                {% csrf_token %}
+                {{ formRegister.non_field_errors }}
+
+                {% for field in formRegister %}
+                <div class="mb-3 row">
+
+
+                    <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label }}</label>
+                    <div class="col-sm-9">
+                        {{ field }}
+                    </div>
+
+                    {% if field.errors %}
+
+                    <div class="alert alert-danger mt-2" role="alert">
+                        {% for error in field.errors %}
+                        {{ error }}
+                        {% endfor %}
+                    </div>
+
+                    {% endif %}
+
+                    {% if field.help_text %}
+                    <p class="help">{{ field.help_text|safe }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <button class="btn btn-primary offset-3" type="submit">Enviar</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h3>Login</h3>
+            <hr>
+
+            <form action="{% url 'acceso:login' %}" method="post">
+            
+                {% csrf_token %}
+                {{ formLogin.non_field_errors }}
+
+                {% for field in formLogin %}
+                <div class="mb-3 row">
+
+
+                    <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label }}</label>
+                    <div class="col-sm-9">
+                        {{ field }}
+                    </div>
+
+                    {% if field.errors %}
+
+                    <div class="alert alert-danger mt-2" role="alert">
+                        {% for error in field.errors %}
+                        {{ error }}
+                        {% endfor %}
+                    </div>
+
+                    {% endif %}
+
+                    {% if field.help_text %}
+                    <p class="help">{{ field.help_text|safe }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <button class="btn btn-primary offset-3" type="submit">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}
