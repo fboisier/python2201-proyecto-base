@@ -1,0 +1,71 @@
+{% extends "core/base.html"%}
+
+{% block titulo %}Directores{% endblock %}
+
+{% block estilos %}
+
+<style>
+
+    h1{
+        text-align: center;
+        font-size: 50px;
+        margin-top: 100px;
+    }
+</style>
+
+{% endblock %}
+
+{% block contenido %}
+
+<div class="container mt-5">
+    <h1>Directores</h1>
+    <hr>
+
+    <div class="row">
+        <div class="col-6">
+            <ul>
+                {% for director in directores %}
+                    <li>{{director}} - <a href="{% url 'directores_editar' id=director.id %}">EDITAR</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-6">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+
+                {% for field in form %}
+                <div class="mb-3 row">
+
+
+                    <label for="{{ field.id_for_label }}" class="col-sm-3 col-form-label">{{ field.label }}</label>
+                    <div class="col-sm-9">
+                        {{ field }}
+                    </div>
+
+                    {% if field.errors %}
+
+                    <div class="alert alert-danger mt-2" role="alert">
+                        {% for error in field.errors %}
+                        {{ error }}
+                        {% endfor %}
+                    </div>
+
+                    {% endif %}
+
+                    {% if field.help_text %}
+                    <p class="help">{{ field.help_text|safe }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <button class="btn btn-primary offset-3" type="submit">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+
+{% endblock %}
